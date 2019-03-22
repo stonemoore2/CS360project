@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -16,7 +17,15 @@ string file_to_string(ifstream& in){
 
 ifstream infile("input.txt");
 string code = file_to_string(infile);
+memory external = memory(2048);
+vector<string> binary = string_to_binary(code);
 
 int main(){
-	
+	for (int j = 0; j < binary.size(); j++){
+		external.setword(j, binary[j]);
+	}
+	cout << "| Word | Data |" << "\n";
+	for (int i = 0; i < external.getsize(); i++){
+		printf ("|  %i   | %s |\n", i, external.getword(i));
+	}
 }
