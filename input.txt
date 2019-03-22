@@ -1,0 +1,14 @@
+int total(int a[5]){
+	int max=0;
+	for(int i=0;i<5;i++){
+		if(max<a[i]){
+			max=a[i];
+		}
+	}
+	return max;
+}
+
+int main(){
+	int a[5]={16,2,77,40,5};
+	int max=total(a);
+}
