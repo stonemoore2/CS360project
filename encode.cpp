@@ -60,7 +60,7 @@ int main(){
 	cin.get(n);
 	cout << char_to_binary(n);*/
 
-	vector<string> test = string_to_binary("I'm testing");
+	/*vector<string> test = string_to_binary("I'm testing");
 	for (int i = 0; i < test.size(); i++)
-		cout << test[i] << " ";
+		cout << test[i] << " ";*/
 }
