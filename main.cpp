@@ -15,7 +15,7 @@ string file_to_string(ifstream& in){
 }
 
 ifstream infile("input.txt");
-string foo = file_to_string(infile);
+string code = file_to_string(infile);
 
 int main(){
 	
