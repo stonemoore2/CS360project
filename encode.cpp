@@ -8,6 +8,10 @@ using namespace std;
 string char_to_binary(char c){
 	if (c == ' ')
 		return "00100000";
+	else if (c == '\t')
+	  return "00001001";
+	else if (c == '\n')
+	  return "00001010";
 	string c2(1, c);
 	ifstream infile("ascii_table.txt");
 	string inp, outp;
