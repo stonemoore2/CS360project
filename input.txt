@@ -1,6 +1,6 @@
 int total(int a[5]){
 	int max=0;
-	for(int i=0;i<5;i++){
+	for(int i=0;i<5;i=i+1){
 		if(max<a[i]){
 			max=a[i];
 		}
