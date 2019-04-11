@@ -33,15 +33,6 @@ string block(string input) {
   return output;
 }
 
-/*Keeps track of declared variables
-  vector<string> variables;
-  //keeps track of number of variables per function for subtracting from rbp
-  vector<int> num_variables;
-  //keeps track of declared functions
-  vector<string> functions;
-  //keeps track and helps make labels
-  int labels = 1;
-*/
 
 void translate(string source, stringstream& output, vector<string>& variables, vector<int>& num_variables, vector<string>& functions, int& labels) {
   vector<string> components(6);
@@ -986,20 +977,3 @@ string translate(string source) {
   }
   return value;
 }
-
-/*
-int main(){
-  ifstream t("file.txt");
-  stringstream buffer;
-  buffer << t.rdbuf();
-
-  string source3 = buffer.str();
-  
-  string source = "int total(int b){int max=0;for(int i=1;3>i;i=i+1){int min=max;min=2;max=min;return max;int a[7]={16,2,3,4,5,6,7};if(2<b){total(min);}a[min];}max+min;}";
-  string source2 = "int total(int a[5]){int max=0;for(int i=0;i<5;i=i+1){if(max<a[i]){max=a[i];}}return max;}int main(){int a[5]={16,2,77,40,5};int max=total(a);}";
-
-  string assembly = translateWrap(source3);
-  cout<<assembly<<endl;
-
-      }
-*/
