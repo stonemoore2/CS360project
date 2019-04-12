@@ -24,8 +24,6 @@ int main(int argc, char** argv)
   vector<string> binary = string_to_binary(code);
 
   bool run_prog = true;
-  std::string Source_In;
-  std::string inputFile = "input.txt";
   
   while (run_prog)
   {
@@ -39,7 +37,7 @@ int main(int argc, char** argv)
     
     if(command == "1")
     {
-      std::cout << "Please edit the input file " << inputFile << " directly, press any key to continue" << std::endl;
+      std::cout << "Please edit the input file input.txt directly, press any key to continue" << std::endl;
       std::cin.ignore(1);
       std::cin.clear();
       
@@ -51,14 +49,6 @@ int main(int argc, char** argv)
     else if(command=="2" )
   
     {
-      /*if(Source_In != "")
-      {
-        //parse entire string, including tabs and the like, into MIPS assembly code.
-        //Call function on Source_In string.
-        //Store result in some container.
-      }
-      //call function that print converted assembly code
-      //Print using cout or in-built print function.*/
       cout<<"TRANSLATED SOURCE CODE"<<endl;
       string assembly = translate(code);
       cout<<assembly<<endl;
