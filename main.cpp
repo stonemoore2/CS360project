@@ -1,7 +1,5 @@
-#include "memory.cpp"
 #include "encode.cpp"
 #include "translator.cpp"
-//#include "structs.cpp"
 
 #include <string>
 #include <fstream>
@@ -15,39 +13,19 @@ string file_to_string(ifstream& in){
     return sstr.str();
 }
 
-ifstream infile("input.txt");
-string code = file_to_string(infile);
-
-memory external = memory(2048);
-vector<string> binary = string_to_binary(code);
-
-
-/*int main(){
-  cout<<"TRANSLATED SOURCE CODE"<<endl;
-  string assembly = translate(code);
-  cout<<assembly<<endl<<"MEMORY"<<endl;
-  
-	for (int j = 0; j < binary.size(); j++){
-		external.setword(j, binary[j]);
-	}
-		cout << "| Word | Data |" << "\n";
-	for (int i = 0; i < external.getsize(); i++){
-	  printf ("|  %i   | %s |\n", i, external.getword(i).c_str());
-    //code doesn't work on my mac without the .c_str() at the end. If this causes
-    //a problem removing it should hopefully fix it - Emile
-  }
-
-}*/
-
-
 int main(int argc, char** argv) 
 {
+
+
+  ifstream infile("input.txt");
+  string code = file_to_string(infile);
+  infile.close();
+
+  vector<string> binary = string_to_binary(code);
+
   bool run_prog = true;
   std::string Source_In;
   std::string inputFile = "input.txt";
-  
-  memory external = memory(2048);
-  vector<string> binary = string_to_binary(code);
   
   while (run_prog)
   {
@@ -65,9 +43,10 @@ int main(int argc, char** argv)
       std::cin.ignore(1);
       std::cin.clear();
       
-      ifstream infile(inputFile.c_str());
+      ifstream infile("input.txt");
       code = file_to_string(infile);
       infile.close();
+      binary = string_to_binary(code);
     }
     else if(command=="2" )
   
@@ -88,19 +67,13 @@ int main(int argc, char** argv)
     else if(command == "3")
   
     {
-        for (int j = 0; j < binary.size(); j++){
-          external.setword(j, binary[j]);
-        }
-        cout << "| Word | Data |" << "\n";
-  
-        for (int i = 0; i < external.getsize(); i++)
-        {
-          
-          printf ("|  %i   | %s |\n", i, external.getword(i).c_str()); 
-        }
-  
-  
 
+        cout << "| Word | Data |" << "\n";
+        for (int i = 0; i < binary.size(); i++)
+        {
+          printf ("|  %i   | %s |\n", i, binary[i].c_str());
+        }
+  
     }
     
     else if (command =="4")
@@ -109,7 +82,6 @@ int main(int argc, char** argv)
   
       run_prog = false;
       
-
     }
     
     else
