@@ -5,22 +5,21 @@
 
 using namespace std;
 
+string toBinary(int n){
+    string r;
+    while(n!=0){
+    	r=(n%2==0 ?"0":"1")+r; 
+    	n/=2;
+    }
+    return r;
+}
+
 string char_to_binary(char c){
-	if (c == ' ')
-		return "00100000";
-	else if (c == '\t')
-	  return "00001001";
-	else if (c == '\n')
-	  return "00001010";
-	string c2(1, c);
-	ifstream infile("ascii_table.txt");
-	string inp, outp;
-	while (infile >> inp >> outp){
-		if (inp == c2){
-			return outp;
-		}
-	}
-	return "error";
+	int i = c;
+	string s = toBinary(i);
+	while (s.length() < 8)
+		s = "0" + s;
+	return s;
 }
 
 vector<string> string_to_binary(string input){
