@@ -29,7 +29,7 @@ int main(int argc, char** argv)
   {
     
 
-    cout<<"Enter number for command:1. edit source code; 2. print converted assembly code; 3. memory; 4. exit" <<endl;
+    cout<<"Enter number for command:1. edit source code; 2. print converted assembly code; 3. full memory; 4. memory range; 5. exit" <<endl;
     
     string command;
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     
     if(command == "1")
     {
-      std::cout << "Please edit the input file input.txt directly, press any key to continue" << std::endl;
+      std::cout << "Please edit the input file input.txt directly (omit unnecessary spaces), press any key to continue" << std::endl;
       std::cin.ignore(1);
       std::cin.clear();
       
@@ -66,7 +66,25 @@ int main(int argc, char** argv)
   
     }
     
-    else if (command =="4")
+
+    else if (command =="4"){
+      int beg, end;
+      cout<< "Enter beginning of memory range: ";
+      cin>> beg;
+      cout<< "Enter end of memory range: ";
+      cin>> end;
+      if (beg < end && beg >= 0 && end <= 2047){
+        cout << "| Word | Data |" << "\n";
+        for (int i = beg; i < end + 1; i++){
+          printf ("|  %i   | %s |\n", i, binary[i].c_str());
+        }
+      }
+      else
+        cout<< "invalid range" << "\n";
+    }
+
+
+    else if (command =="5")
   
     {
   
