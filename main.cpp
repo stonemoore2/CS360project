@@ -1,5 +1,7 @@
 #include "encode.cpp"
 #include "translator.cpp"
+#include "conversion.cpp"
+
 
 #include <string>
 #include <fstream>

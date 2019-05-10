@@ -32,7 +32,7 @@ vector<string> string_to_binary(string input){
 	}
 	if (result.back().size() < 16)
 		result.back().append("00000000");
-	while(result.size() < 2048)
+	while (result.size() < 2048)
 		result.push_back("0000000000000000");
 	return result;
 }
