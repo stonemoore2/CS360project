@@ -1,7 +1,7 @@
 #include "encode.cpp"
 #include "translator.cpp"
-//#include "cpu.cpp"
 #include "conversion.cpp"
+#include "cpu.cpp"
 
 
 #include <string>
