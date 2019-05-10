@@ -1,5 +1,6 @@
 #include "encode.cpp"
 #include "translator.cpp"
+//#include "cpu.cpp"
 #include "conversion.cpp"
 
 
@@ -17,10 +18,9 @@ string file_to_string(ifstream& in){
 
 int main(int argc, char** argv) 
 {
-
-
   ifstream infile("input.txt");
   string code = file_to_string(infile);
+  string assembly;
   infile.close();
 
   vector<string> binary = string_to_binary(code);
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
   {
     
 
-    cout<<"Enter number for command:1. edit source code; 2. print converted assembly code; 3. full memory; 4. memory range; 5. exit" <<endl;
+    cout<<"Enter number for command:\n1. edit source code\n2. print converted assembly code\n3. full memory\n4. memory range\n5. assembly to machine code\n6. exit" <<endl;
     
     string command;
 
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
   
     {
       cout<<"TRANSLATED SOURCE CODE"<<endl;
-      string assembly = translate(code);
+      assembly = translate(code);
       cout<<assembly<<endl;
     }
     
@@ -85,8 +85,18 @@ int main(int argc, char** argv)
         cout<< "invalid range" << "\n";
     }
 
-
     else if (command =="5")
+  
+    {
+  
+      assembly = translate (code);
+      vector<string> machine_code = assembly_to_machine(assembly);
+      for (string s: machine_code){
+        cout << s << '\n';
+      }
+    }
+
+    else if (command =="6")
   
     {
   

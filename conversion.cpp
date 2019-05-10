@@ -5,6 +5,23 @@
 
 using namespace std;
 
+vector<int> calls;
+
+class CPU{
+	public:
+		string rax = "01111111111", rdi = "10111111111", rdx = "11011111111", rbp = "11101111111", 
+rsp = "11110111111", eax = "11111011111", edi = "11111101111", pc, page_table;
+		string decode(string input);
+};
+CPU cpu_;
+
+int vec_find(vector<string> vec, string to_find){
+	for (unsigned int i = 0; i < vec.size(); i++)
+		if (vec[i] == to_find)
+			return i;
+	return -1;
+}
+
 vector<string> split_on_char(string to_split, char deliniator){
     vector<string> result;
     if (to_split.find(deliniator) == string::npos){
@@ -172,7 +189,19 @@ string operand2_encoder(string operand){
 	return result;
 }
 
-string assembly_line_to_machine (string input){
+string label_encoder(string label, vector<string> label_vec, int p){
+	if (vec_find(label_vec, label) != -1){
+		int jump = (vec_find(label_vec, label)) * 4;
+		string bin_jump = decimal_to_binary(jump);
+		while (bin_jump.size() < 11)
+			bin_jump = "0" + bin_jump;
+		return bin_jump + "0000000000000000";
+	}
+	else
+		return "error";
+}
+
+string assembly_line_to_machine (string input, vector<string> av, vector<string> lv, int pos){
 	string result;
 	vector<string> split_assembly = split_on_char(input, ' ');
 	if (split_assembly[0] == "add"){
@@ -195,9 +224,22 @@ string assembly_line_to_machine (string input){
 	}
 	else if (split_assembly[0] == "call"){
 		result += "11000";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
+		calls.push_back((pos+1) * 4);
 	}
 	else if (split_assembly[0] == "ret"){
 		result += "11001";
+		if (calls.size() != 0){
+			string jump = decimal_to_binary(calls.back());
+			calls.pop_back();
+			while (jump.size() < 11)
+				jump = "0" + jump;
+			result += jump;
+		}
+		else
+			result += "11111111111";
+		result += "0000000000000000";
 	}
 	else if (split_assembly[0] == "push"){
 		result += "10000";
@@ -211,25 +253,38 @@ string assembly_line_to_machine (string input){
 	}
 	else if (split_assembly[0] == "je"){
 		result += "01000";
-		//label
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jg"){
 		result += "01001";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jge"){
 		result += "01010";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jl"){
 		result += "01011";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jle"){
 		result += "01100";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jmp"){
 		result += "01101";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "jne"){
 		result += "01110";
+		string label = split_assembly[1];
+		result += label_encoder(label, lv, pos);
 	}
 	else if (split_assembly[0] == "mov"){
 		result += "00100";
@@ -242,9 +297,37 @@ string assembly_line_to_machine (string input){
 	else if (split_assembly[0] == "lea"){
 		result += "10010";
 		result += operand1_encoder(split_assembly[1]);
+		result += operand2_encoder(split_assembly[2]);
+		/*types:	00 - register
+					01 - register content
+					10 - immediate
+		*/
 	}
 	else
 		result += "error";
 	return result;
 }
 
+vector<string> label_assign(vector<string>& input){
+	vector <string> labels(input.size());
+	unsigned int i = 0;
+	while (i < input.size()){
+		if (input[i].find(":") != string::npos){
+			labels[i] = input[i];
+			labels[i].pop_back();
+			input.erase(input.begin() + i);
+		}
+		else
+			i++;
+	}
+	return labels;
+}
+
+vector<string> assembly_to_machine(string assembly){
+	vector<string> machine;
+	vector<string> assembly_vec = split_on_char(assembly, '\n');
+	vector<string> label_vec = label_assign(assembly_vec);
+	for (int i = 0; i < assembly_vec.size(); i++)
+		machine.push_back(assembly_line_to_machine(assembly_vec[i], assembly_vec, label_vec, i));
+	return machine;
+} 
