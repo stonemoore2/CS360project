@@ -1,0 +1,314 @@
+int total(int a[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<a[i]){
+			max=a[i];
+		}
+	}
+	return max;
+}
+
+int total1(int b[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<b[i]){
+			max=b[i];
+		}
+	}
+	return max;
+}
+
+int total2(int c[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<c[i]){
+			max=c[i];
+		}
+	}
+	return max;
+}
+
+int total3(int d[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<d[i]){
+			max=d[i];
+		}
+	}
+	return max;
+}
+
+int total4(int e[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<e[i]){
+			max=e[i];
+		}
+	}
+	return max;
+}
+
+int total5(int f[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<f[i]){
+			max=f[i];
+		}
+	}
+	return max;
+}
+
+int total6(int g[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<g[i]){
+			max=g[i];
+		}
+	}
+	return max;
+}
+
+int total7(int h[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<h[i]){
+			max=h[i];
+		}
+	}
+	return max;
+}
+
+int total8(int i[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<i[i]){
+			max=i[i];
+		}
+	}
+	return max;
+}
+
+int total9(int j[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<j[i]){
+			max=j[i];
+		}
+	}
+	return max;
+}
+
+int total10(int k[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<k[i]){
+			max=k[i];
+		}
+	}
+	return max;
+}
+
+int total11(int l[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<l[i]){
+			max=l[i];
+		}
+	}
+	return max;
+}
+
+int total12(int m[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<m[i]){
+			max=m[i];
+		}
+	}
+	return max;
+}
+
+int tota13(int n[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<n[i]){
+			max=n[i];
+		}
+	}
+	return max;
+}
+
+int total14(int o[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<o[i]){
+			max=o[i];
+		}
+	}
+	return max;
+}
+
+int total15(int p[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<p[i]){
+			max=p[i];
+		}
+	}
+	return max;
+}
+
+int total16(int q[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<q[i]){
+			max=q[i];
+		}
+	}
+	return max;
+}
+
+int total17(int r[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<r[i]){
+			max=r[i];
+		}
+	}
+	return max;
+}
+
+int total18(int s[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<s[i]){
+			max=s[i];
+		}
+	}
+	return max;
+}
+
+int total19(int t[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<t[i]){
+			max=t[i];
+		}
+	}
+	return max;
+}
+
+int total20(int u[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<u[i]){
+			max=u[i];
+		}
+	}
+	return max;
+}
+
+int total21(int v[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<v[i]){
+			max=v[i];
+		}
+	}
+	return max;
+}
+
+int total22(int w[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<w[i]){
+			max=w[i];
+		}
+	}
+	return max;
+}
+
+int total23(int x[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<x[i]){
+			max=x[i];
+		}
+	}
+	return max;
+}
+
+int total24(int y[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<y[i]){
+			max=y[i];
+		}
+	}
+	return max;
+}
+
+int total25(int z[5]){
+	int max=0;
+	for(int i=0;i<5;i=i+1){
+		if(max<z[i]){
+			max=z[i];
+		}
+	}
+	return max;
+}
+
+int main(){
+	int a[5]={16,2,77,40,5};
+	int b[5]={16,2,77,40,5};
+	int c[5]={16,2,77,40,5};
+	int d[5]={16,2,77,40,5};
+	int e[5]={16,2,77,40,5};
+	int f[5]={16,2,77,40,5};
+	int g[5]={16,2,77,40,5};
+	int h[5]={16,2,77,40,5};
+	int i[5]={16,2,77,40,5};
+	int j[5]={16,2,77,40,5};
+	int k[5]={16,2,77,40,5};
+	int l[5]={16,2,77,40,5};
+	int m[5]={16,2,77,40,5};
+	int n[5]={16,2,77,40,5};
+	int o[5]={16,2,77,40,5};
+	int p[5]={16,2,77,40,5};
+	int q[5]={16,2,77,40,5};
+	int r[5]={16,2,77,40,5};
+	int s[5]={16,2,77,40,5};
+	int t[5]={16,2,77,40,5};
+	int u[5]={16,2,77,40,5};
+	int v[5]={16,2,77,40,5};
+	int w[5]={16,2,77,40,5};
+	int x[5]={16,2,77,40,5};
+	int y[5]={16,2,77,40,5};
+	int z[5]={16,2,77,40,5};
+	int max=total(a);
+	int max1=total1(b);
+	int max2=total2(c);
+	int max3=total3(d);
+	int max4=total4(e);
+	int max5=total5(f);
+	int max6=total6(g);
+	int max7=total7(h);
+	int max8=total8(i);
+	int max9=total9(j);
+	int max10=total10(k);
+	int max11=total11(l);
+	int max12=total12(m);
+	int max13=total13(n);
+	int max14=total14(o);
+	int max15=total15(p);
+	int max16=total16(q);
+	int max17=total17(r);
+	int max18=total18(s);
+	int max19=total19(t);
+	int max20=total20(u);
+	int max21=total21(v);
+	int max22=total22(w);
+	int max23=total23(x);
+	int max24=total24(y);
+	int max25=total25(z);
+}
