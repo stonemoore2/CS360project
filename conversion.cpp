@@ -7,13 +7,13 @@ using namespace std;
 
 vector<int> calls;
 
-class CPU{
+class prc{
 	public:
 		string rax = "01111111111", rdi = "10111111111", rdx = "11011111111", rbp = "11101111111", 
 rsp = "11110111111", eax = "11111011111", edi = "11111101111", pc, page_table, EFLAGS;
 		//string decode(string input);
 };
-CPU cpu_;
+prc cpu_;
 
 int vec_find(vector<string> vec, string to_find){
 	for (unsigned int i = 0; i < vec.size(); i++)
@@ -305,6 +305,11 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	}
 	else
 		result += "error";
+
+	if (lv[pos] != ""){
+		result += " <--- ";
+		result += lv[pos];
+	}
 	return result;
 }
 
@@ -330,4 +335,4 @@ vector<string> assembly_to_machine(string assembly){
 	for (int i = 0; i < assembly_vec.size(); i++)
 		machine.push_back(assembly_line_to_machine(assembly_vec[i], assembly_vec, label_vec, i));
 	return machine;
-} 
+}

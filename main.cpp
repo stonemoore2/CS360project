@@ -23,6 +23,7 @@ int main(int argc, char** argv)
   string assembly;
   infile.close();
 
+  vector<string> machine_code;
   vector<string> binary = string_to_binary(code);
 
   bool run_prog = true;
@@ -90,7 +91,7 @@ int main(int argc, char** argv)
     {
   
       assembly = translate (code);
-      vector<string> machine_code = assembly_to_machine(assembly);
+      machine_code = assembly_to_machine(assembly);
       for (string s: machine_code){
         cout << s << '\n';
       }
