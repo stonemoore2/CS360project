@@ -200,7 +200,9 @@ string operand2_encoder(string operand){
 	string result;
 	if (operand1_encoder(operand) != "error"){
 		result += "0"	;								//0X for non-immediates
-		result += operand1_encoder(operand);	
+		result += operand1_encoder(operand);
+		while (result.size() < 18)
+			result += "0";
 	}
 	else{
 		result += "10";									//10 for immediates
@@ -221,6 +223,25 @@ string label_encoder(string label, vector<string> label_vec, int p){
 			bin_jump = "0" + bin_jump;
 		return bin_jump + "0000000000000000";
 	}
+	else
+		return "error";
+}
+
+string register_encoder(string reg){
+	if (reg == "rbp" || reg == "rbp,")
+		return "0000";
+	else if (reg == "rsp" || reg == "rsp,")
+		return "0001";
+	else if (reg == "rdi" || reg == "rdi,")
+		return "0010";
+	else if (reg == "rax" || reg == "rax,")
+		return "0011";
+	else if (reg == "rdx" || reg == "rdx,")
+		return "0100";
+	else if (reg == "edi" || reg == "edi,")
+		return "0101";
+	else if (reg == "eax" || reg == "eax,")
+		return "0110";
 	else
 		return "error";
 }
@@ -275,8 +296,9 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	}
 	else if (split_assembly[0] == "pop"){
 		result += "10001";
-		result += operand1_encoder(split_assembly[1]);
-		result += "00000000000000";
+		//result += operand1_encoder(split_assembly[1]);
+		result += register_encoder(split_assembly[1]);
+		result += "00000000000000000000000";
 	}
 	else if (split_assembly[0] == "je"){
 		result += "01000";
@@ -324,8 +346,9 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	}
 	else if (split_assembly[0] == "lea"){
 		result += "10010";
-		result += operand1_encoder(split_assembly[1]);
+		result += register_encoder(split_assembly[1]);
 		result += operand2_encoder(split_assembly[2]);
+		result += "00000";
 		/*types:	00 - register
 					01 - register content
 					10 - immediate
