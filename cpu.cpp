@@ -10,6 +10,7 @@ class CPU{
 		//string decode(string input);
 } cpu_;
 
+//evaluate address in brackets
 int pemdas_eval(string to_eval){
 	vector<string> parsed = parse(to_eval);
 	for (unsigned int i = 0; i < parsed.size() - 2; i += 2){
@@ -167,11 +168,21 @@ int arith_logic(string op1_type, string op1, string op2_type, string op2, string
 		return stoi(op2); //memory shenanigans
 }
 
-void compare(){
+void jump(string operation, string label){
+	if (operation == "je" && cpu_.EFLAGS != "0000000000000000")
+		return;
+	else if(operation == "jg" && cpu_.EFLAGS != "0000000000000010")
+		return;
+	else if(operation == "jge" && cpu_.EFLAGS != "0000000000000010" && cpu_.EFLAGS != "0000000000000000")
+		return;
+	else if(operation == "jl" && cpu_.EFLAGS != "0000000000000001")
+		return;
+	else if(operation == "jle" && cpu_.EFLAGS != "0000000000000001" && cpu_.EFLAGS != "0000000000000000")
+		return;
+	else if(operation == "jne" && cpu_.EFLAGS == "0000000000000000")
+		return;
 
-}
-
-void jump(string label){
+	//go to label
 
 }
 
@@ -185,9 +196,11 @@ void CPU::execute_code (vector<string> ac){
 
 void CPU::execute_step(string as){
 	string op1_type, op1, op2_type, op2, operation;
-	if (as.substr(0,3) == "mov" || as.substr(0,3) == "add" || as.substr(0,3) == "sub" || as.substr(0,3) == "cmp"){
-		vector<string> split_ops = split_on_char (as, ' ');
-		operation = split_ops.at(0);
+	vector<string> split_ops = split_on_char (as, ' ');
+	operation = split_ops.at(0);
+
+	//arith/logic
+	if (operation == "mov" || operation == "add" || operation == "sub" || operation == "cmp"){
 		if (split_ops.at(1)[0] == '['){
 			op1_type = "1";
 			op1 = split_ops.at(1).substr(1);
@@ -216,6 +229,8 @@ void CPU::execute_step(string as){
 		string binary_result = decimal_to_binary(arith_logic(op1_type, op1, op2_type, op2, operation, store_address));
 		if (operation == "cmp"){
 			cpu_.EFLAGS = binary_result;
+			while(cpu_.EFLAGS.size() < 16)
+				cpu_.EFLAGS = "0" + cpu_.EFLAGS;
 			return;
 		}
 
@@ -241,5 +256,12 @@ void CPU::execute_step(string as){
 
 		}
 	}
+
+	//jump
+	else if(as[0] == 'j'){
+		jump(operation, split_ops.at(1));
+	}
+
+
 	return;
 }

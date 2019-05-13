@@ -133,8 +133,6 @@ string eval_stack(vector<string> stack){
 			stack[i+2] = to_string(op1 / op2);*/
 
 
-
-
 		//placeholder for operations within brackets in case we have time for it
 		if (stack[i] == "rbp")							
 			return "1000";
@@ -238,7 +236,7 @@ string register_encoder(string reg){
 		return "error";
 }
 
-string assembly_line_to_machine (string input, vector<string> av, vector<string> lv, int pos){
+string assembly_line_to_machine (string input, vector<string> lv, int pos){
 	string result;
 	vector<string> split_assembly = split_on_char(input, ' ');
 	if (split_assembly[0] == "add"){
@@ -266,9 +264,10 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 		result += "11000";
 		string label = split_assembly[1];
 		result += label_encoder(label, lv);
-		calls.push_back((pos+1) * 4);
+		calls.push_back((pos+1) * 4); 			//placeholder for actual address calculation
 	}
 	else if (split_assembly[0] == "ret"){
+		//placeholder for popping return address from function call stack
 		result += "11001";
 		if (calls.size() != 0){
 			string jump = decimal_to_binary(calls.back());
@@ -368,11 +367,11 @@ vector<string> label_assign(vector<string>& input){
 
 vector<string> label_vec;
 
-vector<string> assembly_to_machine(string assembly){
+vector<string> assembly_to_machine(string as){
 	vector<string> machine;
-	vector<string> assembly_vec = split_on_char(assembly, '\n');
+	vector<string> assembly_vec = split_on_char(as, '\n');
 	label_vec = label_assign(assembly_vec);
 	for (int i = 0; i < assembly_vec.size(); i++)
-		machine.push_back(assembly_line_to_machine(assembly_vec[i], assembly_vec, label_vec, i));
+		machine.push_back(assembly_line_to_machine(assembly_vec[i], label_vec, i));
 	return machine;
 }
