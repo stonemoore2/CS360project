@@ -7,13 +7,6 @@ using namespace std;
 
 vector<int> calls;
 
-class prc{
-	public:
-		string rax, rdi, rdx, rbp, rsp, eax, edi, pc, page_table, EFLAGS;
-		//string decode(string input);
-};
-prc cpu_;
-
 int vec_find(vector<string> vec, string to_find){
 	for (unsigned int i = 0; i < vec.size(); i++)
 		if (vec[i] == to_find)

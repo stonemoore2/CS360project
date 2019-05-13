@@ -25,6 +25,7 @@ void machine_to_disk(){
     binary[1024 + i] = machine_code.at(i).substr(0,16);
     binary[1025 + i] = machine_code.at(i).substr(16);
   }
+  return;
 }
 
 int main(int argc, char** argv) 
