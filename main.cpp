@@ -2,6 +2,7 @@
 #include "translator.cpp"
 #include "conversion.cpp"
 #include "cpu.cpp"
+#include "Memory.cpp"
 
 
 #include <string>
@@ -32,7 +33,8 @@ int main(int argc, char** argv)
   {
     
 
-    cout<<"Enter number for command:\n1. edit source code\n2. print converted assembly code\n3. full memory\n4. memory range\n5. assembly to machine code\n6. write assembly and machine code to files\n7. exit" <<endl;
+    cout<<"Enter number for command:\n1. edit source code\n2. print converted assembly code\n3. full memory\n4. memory range\n";
+    cout<<"5. assembly to machine code\n6. write assembly and machine code to files\n7. step_through_program\n8. exit" <<endl;
     
     string command;
 
@@ -117,6 +119,16 @@ int main(int argc, char** argv)
     }
     
     else if (command =="7")
+  
+    {
+  
+      virtual_memory();
+
+	  step_through();
+      
+    }
+
+    else if (command =="8")
   
     {
   
