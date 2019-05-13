@@ -37,13 +37,13 @@ void virtual_memory(){
  	ifstream  ifsM("machine_code.txt");
 
  	string instr;
- 	string machine_code;
+ 	string machine_code_ifs;
 
  	while (ifsM.good()) {
 
- 		getline(ifsM,machine_code);
+ 		getline(ifsM,machine_code_ifs);
 
- 		machine.push_back(machine_code);
+ 		machine.push_back(machine_code_ifs);
  	}
 
  	while (ifsA.good()) {
@@ -186,7 +186,7 @@ void step_through() {
 
 		page_table();
 
-		if (PC < instruction_size - 2) {
+		if (PC < instruction_size - 1) {
 
 			PC++;
 		}
