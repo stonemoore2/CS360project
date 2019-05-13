@@ -10,21 +10,32 @@
 #include <iostream>
 #include <stdio.h>
 
+vector<string> binary, machine_code;
+string assembly;
+
 string file_to_string(ifstream& in){
     stringstream sstr;
     sstr << in.rdbuf();
     return sstr.str();
 }
 
+void machine_to_disk(){
+  for (int i = 0; i < machine_code.size(); i = i + 2){
+    binary[1024 + i] = machine_code.at(i).substr(0,16);
+    binary[1025 + i] = machine_code.at(i).substr(16);
+  }
+}
+
 int main(int argc, char** argv) 
 {
   ifstream infile("input.txt");
   string code = file_to_string(infile);
-  string assembly;
   infile.close();
 
-  vector<string> machine_code;
-  vector<string> binary = string_to_binary(code);
+  binary = string_to_binary(code);
+  assembly = translate (code);
+  machine_code = assembly_to_machine(assembly);
+  machine_to_disk();
 
   bool run_prog = true;
   
@@ -47,7 +58,11 @@ int main(int argc, char** argv)
       ifstream infile("input.txt");
       code = file_to_string(infile);
       infile.close();
+
       binary = string_to_binary(code);
+      assembly = translate (code);
+      machine_code = assembly_to_machine(assembly);
+      machine_to_disk();
     }
     else if(command=="2" )
   
@@ -60,7 +75,6 @@ int main(int argc, char** argv)
     else if(command == "3")
   
     {
-
         cout << "| Word | Data |" << "\n";
         for (int i = 0; i < binary.size(); i++)
         {
@@ -90,18 +104,31 @@ int main(int argc, char** argv)
   
     {
   
-      assembly = translate (code);
-      machine_code = assembly_to_machine(assembly);
-      for (string s: machine_code){
-        cout << s << '\n';
+      /*assembly = translate (code);
+      machine_code = assembly_to_machine(assembly);*/
+
+
+
+      /*for (string s: machine_code){
+        cout << s;
+        //if (label_vec[pos] != "")
+        //  cout<< " <--- " << label_vec[pos];
+        cout << '\n';
+      }*/
+
+      for (int i = 0; machine_code[i] != machine_code.back(); i++){
+        cout << machine_code[i];
+        if (label_vec[i] != "")
+          cout<< " <--- " << label_vec[i];
+        cout << endl;
       }
     }
 
     else if (command =="6")
   
     {
-      assembly = translate (code);
-      machine_code = assembly_to_machine(assembly);
+      /*assembly = translate (code);
+      machine_code = assembly_to_machine(assembly);*/
       ofstream filewrite;
       istringstream iss(assembly);
       filewrite.open("assembly.txt");
@@ -110,8 +137,20 @@ int main(int argc, char** argv)
       filewrite.close();
 
       filewrite.open("machine_code.txt");
-      for (string x:machine_code)
-        filewrite << x << "\n";
+
+      /*for (string x:machine_code)
+        filewrite << x;
+        if (label_vec[pos] != "")
+          filewrite << " <--- " << label_vec[pos];
+        filewrite << "\n";*/
+
+      for (int i = 0; machine_code[i] != machine_code.back(); i++){
+        filewrite << machine_code[i];
+        if (label_vec[i] != "")
+          filewrite << " <--- " << label_vec[i];
+        filewrite << endl;
+      }
+
       filewrite.close();
       cout<< "assembly.txt and machine_code.txt written\n";
     }

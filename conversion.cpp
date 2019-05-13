@@ -9,8 +9,7 @@ vector<int> calls;
 
 class prc{
 	public:
-		string rax = "01111111111", rdi = "10111111111", rdx = "11011111111", rbp = "11101111111", 
-rsp = "11110111111", eax = "11111011111", edi = "11111101111", pc, page_table, EFLAGS;
+		string rax, rdi, rdx, rbp, rsp, eax, edi, pc, page_table, EFLAGS;
 		//string decode(string input);
 };
 prc cpu_;
@@ -143,7 +142,7 @@ string eval_stack(vector<string> stack){
 
 
 
-		//placeholder for brackets within operations in case we have time for it
+		//placeholder for operations within brackets in case we have time for it
 		if (stack[i] == "rbp")							
 			return "1000";
 		else if (stack[i] == "rsp")
@@ -215,7 +214,7 @@ string operand2_encoder(string operand){
 	return result;
 }
 
-string label_encoder(string label, vector<string> label_vec, int p){
+string label_encoder(string label, vector<string> label_vec){
 	if (vec_find(label_vec, label) != -1){
 		int jump = (vec_find(label_vec, label)) * 4;
 		string bin_jump = decimal_to_binary(jump);
@@ -273,7 +272,7 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	else if (split_assembly[0] == "call"){
 		result += "11000";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 		calls.push_back((pos+1) * 4);
 	}
 	else if (split_assembly[0] == "ret"){
@@ -303,37 +302,37 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	else if (split_assembly[0] == "je"){
 		result += "01000";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jg"){
 		result += "01001";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jge"){
 		result += "01010";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jl"){
 		result += "01011";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jle"){
 		result += "01100";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jmp"){
 		result += "01101";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "jne"){
 		result += "01110";
 		string label = split_assembly[1];
-		result += label_encoder(label, lv, pos);
+		result += label_encoder(label, lv);
 	}
 	else if (split_assembly[0] == "mov"){
 		result += "00100";
@@ -356,11 +355,6 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	}
 	else
 		result += "error";
-
-	if (lv[pos] != ""){
-		result += " <--- ";
-		result += lv[pos];
-	}
 	return result;
 }
 
@@ -379,10 +373,12 @@ vector<string> label_assign(vector<string>& input){
 	return labels;
 }
 
+vector<string> label_vec;
+
 vector<string> assembly_to_machine(string assembly){
 	vector<string> machine;
 	vector<string> assembly_vec = split_on_char(assembly, '\n');
-	vector<string> label_vec = label_assign(assembly_vec);
+	label_vec = label_assign(assembly_vec);
 	for (int i = 0; i < assembly_vec.size(); i++)
 		machine.push_back(assembly_line_to_machine(assembly_vec[i], assembly_vec, label_vec, i));
 	return machine;
