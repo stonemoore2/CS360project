@@ -32,7 +32,7 @@ int main(int argc, char** argv)
   {
     
 
-    cout<<"Enter number for command:\n1. edit source code\n2. print converted assembly code\n3. full memory\n4. memory range\n5. assembly to machine code\n6. exit" <<endl;
+    cout<<"Enter number for command:\n1. edit source code\n2. print converted assembly code\n3. full memory\n4. memory range\n5. assembly to machine code\n6. write assembly and machine code to files\n7. exit" <<endl;
     
     string command;
 
@@ -100,11 +100,30 @@ int main(int argc, char** argv)
     else if (command =="6")
   
     {
+      assembly = translate (code);
+      machine_code = assembly_to_machine(assembly);
+      ofstream filewrite;
+      istringstream iss(assembly);
+      filewrite.open("assembly.txt");
+      for (string line; getline(iss, line);)
+        filewrite << line << "\n";
+      filewrite.close();
+
+      filewrite.open("machine_code.txt");
+      for (string x:machine_code)
+        filewrite << x << "\n";
+      filewrite.close();
+      cout<< "assembly.txt and machine_code.txt written\n";
+    }
+    
+    else if (command =="7")
+  
+    {
   
       run_prog = false;
       
     }
-    
+
     else
 
     {

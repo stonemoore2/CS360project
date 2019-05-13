@@ -79,24 +79,24 @@ int binary_to_decimal(string binary){
 string eval_stack(vector<string> stack){
     if (stack.size() == 1){
 		if (stack[0] == "rbp]")
-			return cpu_.rbp;
+			return "0000";
 		else if (stack[0] == "rsp]")
-			return cpu_.rsp;
+			return "0001";
 		else if (stack[0] == "rdi]")
-			return cpu_.rdi;
+			return "0010";
 		else if (stack[0] == "rax]")
-			return cpu_.rax;
+			return "0011";
 		else if (stack[0] == "rdx]")
-			return cpu_.rdx;
+			return "0100";
 		else if (stack[0] == "edi]")
-			return cpu_.edi;
+			return "0101";
 		else if (stack[0] == "eax]")
-			return cpu_.eax;
+			return "0110";
 		else
 			return "error";
 	}
 	for (unsigned int i = 0; i < stack.size() - 2; i += 2){
-		int op1, op2;
+		/*int op1, op2;
 		if (stack[i] == "rbp")
 			op1 = binary_to_decimal(cpu_.rbp);
 		else if (stack[i] == "rsp")
@@ -138,9 +138,33 @@ string eval_stack(vector<string> stack){
 		else if (stack[i+1] == "*")
 			stack[i+2] = to_string(op1 * op2);
 		else if (stack[i+1] == "/")
-			stack[i+2] = to_string(op1 / op2);
+			stack[i+2] = to_string(op1 / op2);*/
+
+
+
+
+		//placeholder for brackets within operations in case we have time for it
+		if (stack[i] == "rbp")							
+			return "1000";
+		else if (stack[i] == "rsp")
+			return "1001";
+		else if (stack[i] == "rdi")
+			return "1010";
+		else if (stack[i] == "rax")
+			return "1011";
+		else if (stack[i] == "rdx")
+			return "1100";
+		else if (stack[i] == "edi")
+			return "1101";
+		else if (stack[i] == "eax")
+			return "1110";
 	}
-	return decimal_to_binary(stoi(stack[stack.size()-1]));
+
+
+
+
+	//return decimal_to_binary(stoi(stack[stack.size()-1]));
+	return "error";
 }
 
 string operand1_encoder(string operand){
@@ -150,24 +174,24 @@ string operand1_encoder(string operand){
 		operand = operand.substr(1,operand.size()-1);
 		vector<string> parse_stack = parse(operand);
 		string evaluated = eval_stack(parse_stack);
-		while (evaluated.size() < 12)
+		while (evaluated.size() < 4)
 			evaluated = "0" + evaluated;
 		return "1" + evaluated;							//1 for addresses
 	}
 	else if (operand == "rbp")							//0 for registers
-		return "0000000000000";
+		return "00000";
 	else if (operand == "rsp")
-		return "0000100000000";
+		return "00001";
 	else if (operand == "rdi")
-		return "0001000000000";
+		return "00010";
 	else if (operand == "rax")
-		return "0001100000000";
+		return "00011";
 	else if (operand == "rdx")
-		return "0010000000000";
+		return "00100";
 	else if (operand == "edi")
-		return "0010100000000";
+		return "00101";
 	else if (operand == "eax")
-		return "0011000000000";
+		return "00110";
 	else
 		return "error";
 }
@@ -182,7 +206,7 @@ string operand2_encoder(string operand){
 		result += "10";									//10 for immediates
 		int int_imm	 = stoi(operand);			
 		string str_imm = decimal_to_binary(int_imm);
-		while (str_imm.size() < 12)
+		while (str_imm.size() < 16)
 			str_imm = "0" + str_imm;
 		result += str_imm;
 	}
@@ -208,16 +232,19 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 		result += "00000";
 		result += operand1_encoder(split_assembly[1]);
 		result += operand2_encoder(split_assembly[2]);
+		result += "0000";
 	}
 	else if (split_assembly[0] == "sub"){
 		result += "00001";
 		result += operand1_encoder(split_assembly[1]);
 		result += operand2_encoder(split_assembly[2]);
+		result += "0000";
 	}
 	else if (split_assembly[0] == "cmp"){
 		result += "00010";
 		result += operand1_encoder(split_assembly[1]);
 		result += operand2_encoder(split_assembly[2]);
+		result += "0000";
 	}
 	else if (split_assembly[0] == "cdqe"){
 		result += "00011000000000000000000000000000";
@@ -244,7 +271,7 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 	else if (split_assembly[0] == "push"){
 		result += "10000";
 		result += operand2_encoder(split_assembly[1]);
-		result += "0000000000000";
+		result += "000000000";
 	}
 	else if (split_assembly[0] == "pop"){
 		result += "10001";
@@ -290,6 +317,7 @@ string assembly_line_to_machine (string input, vector<string> av, vector<string>
 		result += "00100";
 		result += operand1_encoder(split_assembly[1]);
 		result += operand2_encoder(split_assembly[2]);
+		result += "0000";
 	}
 	else if (split_assembly[0] == "leave"){
 		result += "11010000000000000000000000000000";
