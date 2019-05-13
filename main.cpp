@@ -66,23 +66,23 @@ int main(int argc, char** argv)
       machine_code = assembly_to_machine(assembly);
       machine_to_disk();
     }
+
+
     else if(command=="2" )
-  
     {
       cout<<"TRANSLATED SOURCE CODE"<<endl;
       assembly = translate(code);
       cout<<assembly<<endl;
     }
     
+
     else if(command == "3")
-  
     {
         cout << "| Word | Data |" << "\n";
         for (int i = 0; i < binary.size(); i++)
         {
           printf ("|  %i   | %s |\n", i, binary[i].c_str());
         }
-  
     }
     
 
@@ -102,22 +102,9 @@ int main(int argc, char** argv)
         cout<< "invalid range" << "\n";
     }
 
+
     else if (command =="5")
-  
     {
-  
-      /*assembly = translate (code);
-      machine_code = assembly_to_machine(assembly);*/
-
-
-
-      /*for (string s: machine_code){
-        cout << s;
-        //if (label_vec[pos] != "")
-        //  cout<< " <--- " << label_vec[pos];
-        cout << '\n';
-      }*/
-
       for (int i = 0; machine_code[i] != machine_code.back(); i++){
         cout << machine_code[i];
         if (label_vec[i] != "")
@@ -126,64 +113,46 @@ int main(int argc, char** argv)
       }
     }
 
+
     else if (command =="6")
-  
     {
-      /*assembly = translate (code);
-      machine_code = assembly_to_machine(assembly);*/
       ofstream filewrite;
       istringstream iss(assembly);
       filewrite.open("assembly.txt");
       for (string line; getline(iss, line);)
         filewrite << line << "\n";
       filewrite.close();
-
+      
       filewrite.open("machine_code.txt");
-
-      /*for (string x:machine_code)
-        filewrite << x;
-        if (label_vec[pos] != "")
-          filewrite << " <--- " << label_vec[pos];
-        filewrite << "\n";*/
-
       for (int i = 0; machine_code[i] != machine_code.back(); i++){
         filewrite << machine_code[i];
         if (label_vec[i] != "")
           filewrite << " <--- " << label_vec[i];
         filewrite << endl;
       }
-
       filewrite.close();
       cout<< "assembly.txt and machine_code.txt written\n";
     }
     
-    else if (command =="7")
-  
-    {
-  
-      virtual_memory();
 
-	  step_through();
-      
+    else if (command =="7")
+    {
+      virtual_memory();
+      step_through();  
     }
+
 
     else if (command =="8")
-  
     {
-  
       run_prog = false;
-      
     }
 
+
     else
-
     {
-
       cout<<"Please enter a valid command"<<endl;
-      
     }
   
   }
-  
   return 0;
 }
