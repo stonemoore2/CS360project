@@ -174,6 +174,7 @@ void step_through() {
 		// '123' takes 3 steps
 		// 'helloworld' takes 10 steps
 		cout << "press any key and 'Enter' to continue" << endl;
+		cout << "FUNCTION WILL ONLY LOOP UNTIL CPU CLASS IS TIED IN TO RUN MACHINE CODE AND UPDATE REGISTERS"
 		char x;
 		cin >> x;
 
