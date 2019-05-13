@@ -15,7 +15,7 @@ int PC = -1;
 int instruction_size = 0;
 
 // Stores assemby code as vector of strings for easy access
-vector<string> assembly;
+vector<string> assembly_mem;
 
 // Stores machine code as vector of string for easy access
 vector<string> machine;
@@ -89,7 +89,7 @@ void virtual_memory(){
 
 	 			instruction_counter++;
 
-	 			assembly.push_back(instr);
+	 			assembly_mem.push_back(instr);
  			}
 
  			else {
@@ -112,7 +112,7 @@ void virtual_memory(){
 
 	 			instruction_counter++;
 
-	 			assembly.push_back(instr);
+	 			assembly_mem.push_back(instr);
 	 		}
  		}
  	}
@@ -167,7 +167,7 @@ void step_through() {
 		cout << endl
 			 << "///////// CURRENT INSTRUCTION & CURRENT MACHINE CODE///////////////"<< endl;
 
-		cout << "       " << assembly[PC] << endl
+		cout << "       " << assembly_mem[PC] << endl
 			 << "       " << machine[PC]<< endl;
 
 		cout << endl
