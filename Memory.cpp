@@ -120,6 +120,26 @@ void virtual_memory(){
  	instruction_size = instruction_counter;
 }
 
+void page_table(){
+
+	int pages = (instruction_size + 1) / 4;
+
+	if (instruction_size % 4 != 0) {
+
+		pages++;
+	}
+
+	int page_valid[pages] = {0,0,0,0,0,0,0};
+
+	cout << "///////////////////// PAGE TABLE /////////////////////" << endl;
+	cout << "[Valid]\t[Page]\t[Address]" << endl;
+
+	for (int i = 0; i < pages; i++) {
+
+		cout << "[" << page_valid[i] << "]\t" << "[" << i << "]\t" << "Address" << endl; 
+	}
+}
+
 // WORK IN PROGRESS step_through() will run single lines of code starting from main and update register values as it does so
 void step_through() {
 
@@ -161,6 +181,10 @@ void step_through() {
 			 << "rdx: " << endl
 			 << "edi: " << endl
 			 << "eax: " << endl;
+
+		cout << endl;
+
+		page_table();
 
 		if (PC < instruction_size - 2) {
 
