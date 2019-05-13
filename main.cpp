@@ -106,7 +106,7 @@ int main(int argc, char** argv)
 
     else if (command =="5")
     {
-      for (int i = 0; machine_code[i] != machine_code.back(); i++){
+      for (int i = 0; i < machine_code.size(); i++){
         cout << machine_code[i];
         if (label_vec[i] != "")
           cout<< " <--- " << label_vec[i];
@@ -125,7 +125,7 @@ int main(int argc, char** argv)
       filewrite.close();
       
       filewrite.open("machine_code.txt");
-      for (int i = 0; machine_code[i] != machine_code.back(); i++){
+      for (int i = 0; i < machine_code.size(); i++){
         filewrite << machine_code[i];
         if (label_vec[i] != "")
           filewrite << " <--- " << label_vec[i];
