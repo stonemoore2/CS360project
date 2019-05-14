@@ -39,6 +39,14 @@ int main(int argc, char** argv)
   machine_code = assembly_to_machine(assembly);
   machine_to_disk();
 
+
+
+
+  // [EMI] INITIALIZE CACHE HERE
+
+
+
+
   bool run_prog = true;
   
   while (run_prog)
@@ -79,10 +87,10 @@ int main(int argc, char** argv)
 
     else if(command == "3")
     {
-        cout << "| Word | Data |" << "\n";
+        cout << "|\tWord\t|       Data       |" << "\n";
         for (int i = 0; i < binary.size(); i++)
         {
-          printf ("|  %i   | %s |\n", i, binary[i].c_str());
+          printf ("|\t%i\t| %s |\n", i, binary[i].c_str());
         }
     }
     
