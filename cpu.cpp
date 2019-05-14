@@ -436,8 +436,11 @@ void CPU::execute_step(string as){
 
 	//load effective address
 	else if(operation == "lea"){
-		int i = 0;
-		int res = arith_logic (0, op1, 1, op2, "mov", i);
+		op2 = split_ops[2];
+		op2 = op2.substr(1);
+		op2.pop_back();
+		op2.pop_back();
+		int res = pemdas_eval(op2);
 		if (op1 == "rax")
 			cpu_.rax = res;
 		else if (op1 == "rdi")
