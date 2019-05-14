@@ -183,9 +183,18 @@ void step_through() {
 			 << "rax: " << cpu_.rax << endl
 			 << "rdx: " << cpu_.rdx << endl
 			 << "edi: " << cpu_.edi << endl
-			 << "eax: " << cpu_.eax << endl;
+			 << "eax: " << cpu_.eax << endl
+			 << "EFLAGS: " << cpu_.EFLAGS << endl;
 
-		cout << endl;
+		cout << endl
+			 << "////////////////////////// CALL STACK /////////////////////////////"<< endl;
+
+			 for (int i = cpu_.call_stack.size() - 1; i >= 0; i--){
+			 	if (i >= cpu_.rbp)
+			 		cout << cpu_.call_stack[i] <<endl;
+			 }
+
+		cout<< endl;
 
 		page_table();
 
