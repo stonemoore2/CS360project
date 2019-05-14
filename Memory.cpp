@@ -9,7 +9,8 @@ using namespace std;
 int num_of_iteration = 1;
 
 // Keeps track of current address being pointed to by PC, PC initialized as -1 until address of main() is determined
-int PC = -1;
+// USING cpu_.pc INSTEAD
+//int PC = -1;        
 
 // Keeps track of how many lines machine_code and assembly code needs
 int instruction_size = 0;
@@ -60,7 +61,7 @@ void virtual_memory(){
 
  		else if (instr.substr(0,4) == "main") {
 
- 			PC = instruction_counter;
+ 			cpu_.pc = instruction_counter;
  			cout << instr << endl;
 
  			function_names_virt.push_back(instr);
@@ -69,7 +70,7 @@ void virtual_memory(){
 
  		else {
 
- 			if (PC == instruction_counter) {
+ 			if (cpu_.pc == instruction_counter) {
 
  				string PC_string = to_string(instruction_counter);
 
@@ -145,6 +146,8 @@ void step_through() {
 
 	cout << "Step: " << num_of_iteration << endl << endl;
 
+	cpu_.execute_step(assembly_mem[cpu_.pc]);
+
 	num_of_iteration++;
 /*
 	for (int i = 0; i < function_names_virt.size(); i++) {
@@ -156,7 +159,7 @@ void step_through() {
 
 		for (int i = 0; i < instruction_size - 1; i++) {
 
-			if (PC == i) {
+			if (cpu_.pc == i) {
 
 				cout << "PC==> " << "[" << i << "]\t" << machine[i].substr(0,32) << endl;
 			}
@@ -167,31 +170,31 @@ void step_through() {
 		cout << endl
 			 << "///////// CURRENT INSTRUCTION & CURRENT MACHINE CODE///////////////"<< endl;
 
-		cout << "       " << assembly_mem[PC] << endl
-			 << "       " << machine[PC]<< endl;
+		cout << "       " << assembly_mem[cpu_.pc] << endl
+			 << "       " << machine[cpu_.pc]<< endl;
 
 		cout << endl
 			 << "///////////////////// REGISTER VALUES /////////////////////////////"<< endl;
 
-		cout << "PC:  " << PC << endl
-			 << "rbp: " << endl
-			 << "rsp: " << endl
-			 << "rdi: " << endl
-			 << "rax: " << endl
-			 << "rdx: " << endl
-			 << "edi: " << endl
-			 << "eax: " << endl;
+		cout << "PC:  " << cpu_.pc << endl
+			 << "rbp: " << cpu_.rbp << endl
+			 << "rsp: " << cpu_.rsp << endl
+			 << "rdi: " << cpu_.rdi << endl
+			 << "rax: " << cpu_.rax << endl
+			 << "rdx: " << cpu_.rdx << endl
+			 << "edi: " << cpu_.edi << endl
+			 << "eax: " << cpu_.eax << endl;
 
 		cout << endl;
 
 		page_table();
 
-		if (PC < instruction_size - 1) {
+		if (cpu_.pc < instruction_size - 1) {
 
-			PC++;
+			cpu_.pc++;
 		}
 
-		else PC = 0;
+		else cpu_.pc = 0;
 
 		// FEATURE/BUG*** amount of individual characters entered equals how many steps function takes
 		// 'a' takes 1 step

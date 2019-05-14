@@ -4,7 +4,9 @@ using namespace std;
 
 class CPU{
 	public:
-		string rax, rdi, rdx, rbp, rsp, eax, edi, pc, page_table, EFLAGS;
+		int pc = -1;
+		string rax = "0000000000000000", rdi = "0000000000000000", rdx = "0000000000000000", rbp = "0000000000000000", rsp = "11", eax = "0000000000000000", edi = "0000000000000000", page_table, EFLAGS;
+		vector <string> call_stack;
 		void execute_code(vector<string> ac);
 		void execute_step(string as);
 		//string decode(string input);
@@ -164,8 +166,9 @@ int arith_logic(string op1_type, string op1, string op2_type, string op2, string
 		else
 			return 0;
 	}
-	else //mov
+	else{ //mov
 		return stoi(op2); //memory shenanigans
+	}
 }
 
 void jump(string operation, string label){
@@ -188,7 +191,7 @@ void jump(string operation, string label){
 
 
 void CPU::execute_code (vector<string> ac){
-	for (int i = 0; i < ac.size(); i++)
+	for (unsigned int i = 0; i < ac.size(); i++)
 		execute_step(ac[i]);
 	return;
 }
@@ -236,19 +239,19 @@ void CPU::execute_step(string as){
 
 		if (op1_type == "0"){
 			if (split_ops.at(1) == "rax")
-				rax = binary_result;
+				cpu_.rax = binary_result;
 			else if (split_ops.at(1) == "rdi")
-				rdi = binary_result;
+				cpu_.rdi = binary_result;
 			else if (split_ops.at(1) == "rdx")
-				rdx = binary_result;
+				cpu_.rdx = binary_result;
 			else if (split_ops.at(1) == "rbp")
-				rbp = binary_result;
+				cpu_.rbp = binary_result;
 			else if (split_ops.at(1) == "rsp")
-				rsp = binary_result;
+				cpu_.rsp = binary_result;
 			else if (split_ops.at(1) == "eax")
-				eax = binary_result;
+				cpu_.eax = binary_result;
 			else if (split_ops.at(1) == "edi")
-				edi = binary_result;
+				cpu_.edi = binary_result;
 		}
 		else{
 
@@ -257,11 +260,82 @@ void CPU::execute_step(string as){
 		}
 	}
 
+	//cdqe
+	else if(operation == "cdqe"){
+
+	}
+
+	//call
+	else if(operation == "call"){
+		//push address on stack
+		//jump to function
+	}
+
+	//return
+	else if(operation == "ret"){
+		string addr = call_stack.back();
+		call_stack.pop_back();
+		//return to caller
+	}
+
+	//push
+	else if(operation == "push"){
+		if (op1_type == "0"){
+			if (split_ops.at(1) == "rax")
+				call_stack.push_back(rax);
+			else if (split_ops.at(1) == "rdi")
+				call_stack.push_back(rdi);
+			else if (split_ops.at(1) == "rdx")
+				call_stack.push_back(rdx);
+			else if (split_ops.at(1) == "rbp")
+				call_stack.push_back(rbp);
+			else if (split_ops.at(1) == "rsp")
+				call_stack.push_back(rsp);
+			else if (split_ops.at(1) == "eax")
+				call_stack.push_back(eax);
+			else if (split_ops.at(1) == "edi")
+				call_stack.push_back(edi);
+		}
+		else{
+			//push thing at address onto stack
+		}
+
+	}
+
+	//pop
+	else if(operation == "pop"){
+		string to_pop = call_stack.back();
+		call_stack.pop_back();
+		if (split_ops.at(1) == "rax")
+			rax = to_pop;
+		else if (split_ops.at(1) == "rdi")
+			rdi = to_pop;
+		else if (split_ops.at(1) == "rdx")
+			rdx = to_pop;
+		else if (split_ops.at(1) == "rbp")
+			rbp = to_pop;
+		else if (split_ops.at(1) == "rsp")
+			rsp = to_pop;
+		else if (split_ops.at(1) == "eax")
+			eax = to_pop;
+		else if (split_ops.at(1) == "edi")
+			edi = to_pop;
+	}
+
 	//jump
 	else if(as[0] == 'j'){
 		jump(operation, split_ops.at(1));
 	}
 
+	//leave
+	else if(operation == "leave"){
+
+	}
+
+	//load effective address
+	else if(operation == "lea"){
+
+	}
 
 	return;
 }
