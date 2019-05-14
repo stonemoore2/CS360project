@@ -149,6 +149,12 @@ void step_through() {
 	cout << "Step: " << num_of_iteration << endl << endl;
 
 
+	/*
+		[EMI] CACHE OPERATION:
+		ATTEMPT TO ACCESS ADDRESS decimal_to_binary(cpu_.pc) PAD ZEROES TO LEFT AS NECESSARY
+	*/
+
+
 	if(assembly_mem.at(cpu_.pc)[0] != 'j' && assembly_mem.at(cpu_.pc).substr(0,4) != "call")
 		cpu_.execute_step(assembly_mem[cpu_.pc]);
 
@@ -203,6 +209,14 @@ void step_through() {
 			 }
 
 		cout<< endl;
+
+
+
+
+		// [EMI] PRINT CACHE IN SIMILAR FORMAT TO ABOVE AND BELOW
+
+
+
 
 		page_table();
 
