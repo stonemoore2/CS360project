@@ -144,9 +144,12 @@ void page_table(){
 // WORK IN PROGRESS step_through() will run single lines of code starting from main and update register values as it does so
 void step_through() {
 
+
 	cout << "Step: " << num_of_iteration << endl << endl;
 
-	cpu_.execute_step(assembly_mem[cpu_.pc]);
+
+	if(assembly_mem.at(cpu_.pc)[0] != 'j' && assembly_mem.at(cpu_.pc).substr(0,4) != "call")
+		cpu_.execute_step(assembly_mem[cpu_.pc]);
 
 	num_of_iteration++;
 /*
@@ -171,7 +174,7 @@ void step_through() {
 			 << "///////// CURRENT INSTRUCTION & CURRENT MACHINE CODE///////////////"<< endl;
 
 		cout << "       " << assembly_mem[cpu_.pc] << endl
-			 << "       " << machine[cpu_.pc]<< endl;
+			 << "       " << machine[cpu_.pc] << endl;
 
 		cout << endl
 			 << "///////////////////// REGISTER VALUES /////////////////////////////"<< endl;
@@ -198,9 +201,12 @@ void step_through() {
 
 		page_table();
 
-		if (cpu_.pc < instruction_size - 1) {
 
-			cpu_.pc++;
+		if(assembly_mem.at(cpu_.pc)[0] == 'j' || assembly_mem.at(cpu_.pc).substr(0,4) == "call")
+			cpu_.execute_step(assembly_mem[cpu_.pc]);
+
+		else if (cpu_.pc < instruction_size - 1) {
+			cpu_.pc ++;
 		}
 
 		else cpu_.pc = 0;

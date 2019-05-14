@@ -242,8 +242,10 @@ void jump(string operation, string label){
 	else if(operation == "jne" && cpu_.EFLAGS == 0)
 		return;
 
-	//go to label
-
+	for (int i = 0; i < label_vec.size(); i++){
+		if (label_vec[i] == label)
+			cpu_.pc = i;
+	}	
 }
 
 
@@ -319,6 +321,7 @@ void CPU::execute_step(string as){
 		else{
 			int addr = pemdas_eval(op1);
 			call_stack[addr] = result;
+			//if (addr < )
 		}
 	}
 
@@ -331,10 +334,10 @@ void CPU::execute_step(string as){
 	else if(operation == "call"){
 		//push address on stack
 		cpu_.rsp -= 1;
-		cpu_.call_stack[cpu_.rsp] = cpu_.pc;
+		cpu_.call_stack[cpu_.rsp] = cpu_.pc - 1;
 		//jump to function
 		for (int i = 0; i < label_vec.size(); i++){
-			if (label_vec[i] == split_ops.at(1).substr(0,2))
+			if (label_vec[i] == split_ops[1])
 				cpu_.pc = i;
 		}	 
 	}
