@@ -141,6 +141,7 @@ void page_table(){
 	}
 }
 
+
 // WORK IN PROGRESS step_through() will run single lines of code starting from main and update register values as it does so
 void step_through() {
 
@@ -194,6 +195,10 @@ void step_through() {
 
 			 for (int i = cpu_.call_stack.size() - 1; i >= 0; i--){
 			 	if (i >= cpu_.rsp)
+			 		cout << cpu_.call_stack[i] <<endl;
+			 }
+			 for (int i = cpu_.rsp - 1; i >= 0; i--){
+			 	if (cpu_.accessed[i] == 1)
 			 		cout << cpu_.call_stack[i] <<endl;
 			 }
 

@@ -7,6 +7,7 @@ class CPU{
 		int pc = -1;		
 		int rax, rdi, rdx, rbp = 50, rsp = 50, eax, edi, page_table, EFLAGS;
 		vector <int> call_stack = vector <int> (50, 0);
+		int accessed[50] = {};
 
 		void execute_code(vector<string> ac);
 		void execute_step(string as);
@@ -61,6 +62,9 @@ int pemdas_eval(string to_eval){
 			term2 = stoi(parsed[i+2]);
 
 		if (parsed[i+1] == "*"){
+
+			//term2 /= 4;
+
 			parsed[i+2] = to_string(term1 * term2);
 			parsed.erase(parsed.begin() + i, parsed.begin() + i + 2);
 		}
@@ -217,9 +221,9 @@ int arith_logic(int op1_type, string inp1, int op2_type, string inp2, string ope
 		return ope1 - ope2;
 	else if (operation == "cmp"){
 		if (ope1 < ope2)
-			return 1;
-		else if (ope1 > ope2)
 			return 2;
+		else if (ope1 > ope2)
+			return 1;
 		else
 			return 0;
 	}
@@ -229,18 +233,30 @@ int arith_logic(int op1_type, string inp1, int op2_type, string inp2, string ope
 }
 
 void jump(string operation, string label){
-	if (operation == "je" && cpu_.EFLAGS != 0)
+	if (operation == "je" && cpu_.EFLAGS != 0){
+		cpu_.pc++;
 		return;
-	else if(operation == "jg" && cpu_.EFLAGS != 2)
+	}
+	else if(operation == "jg" && cpu_.EFLAGS != 1){
+		cpu_.pc++;
 		return;
-	else if(operation == "jge" && cpu_.EFLAGS != 2 && cpu_.EFLAGS != 0)
+	}
+	else if(operation == "jge" && cpu_.EFLAGS != 1 && cpu_.EFLAGS != 0){
+		cpu_.pc++;
 		return;
-	else if(operation == "jl" && cpu_.EFLAGS != 1)
+	}
+	else if(operation == "jl" && cpu_.EFLAGS != 2){
+		cpu_.pc++;
 		return;
-	else if(operation == "jle" && cpu_.EFLAGS != 1 && cpu_.EFLAGS != 0)
+	}
+	else if(operation == "jle" && cpu_.EFLAGS != 2 && cpu_.EFLAGS != 0){
+		cpu_.pc++;
 		return;
-	else if(operation == "jne" && cpu_.EFLAGS == 0)
+	}
+	else if(operation == "jne" && cpu_.EFLAGS == 0){
+		cpu_.pc++;
 		return;
+	}
 
 	for (int i = 0; i < label_vec.size(); i++){
 		if (label_vec[i] == label)
@@ -296,6 +312,15 @@ void CPU::execute_step(string as){
 		int store_address = 0;
 		int result = arith_logic(op1_type, op1, op2_type, op2, operation, store_address);
 
+		/*if(operation == "mov" && op1_type == 0 && op1 == "rax" && op2_type == 1){
+			for(int i = 0; i < cpu_.call_stack.size(); i++){
+				if (cpu_.call_stack[i] == result){
+					cpu_.rax = i;
+					return;
+				}
+			}
+		}*/
+
 		if (operation == "cmp"){
 			cpu_.EFLAGS = result;
 			return;
@@ -321,13 +346,14 @@ void CPU::execute_step(string as){
 		else{
 			int addr = pemdas_eval(op1);
 			call_stack[addr] = result;
+			cpu_.accessed[addr] = 1;
 			//if (addr < )
 		}
 	}
 
 	//cdqe
 	else if(operation == "cdqe"){
-
+		cpu_.rax = cpu_.eax;
 	}
 
 	//call
@@ -344,9 +370,15 @@ void CPU::execute_step(string as){
 
 	//return
 	else if(operation == "ret"){
-		int addr = call_stack.back();
-		call_stack.pop_back();
+		for(int i = 0; i < cpu_.rbp; i++){
+			accessed[i] = 0;
+			cpu_.call_stack[i] = 0;
+		}
+		rbp = cpu_.call_stack[cpu_.rsp];
+		cpu_.pc = cpu_.call_stack[cpu_.rsp];
+		rsp += 1;
 		//return to caller
+
 	}
 
 	//push
@@ -398,12 +430,28 @@ void CPU::execute_step(string as){
 
 	//leave
 	else if(operation == "leave"){
-
+		for (int i = 0; i <= rbp; i++)
+			cpu_.call_stack[i] = 0;
 	}
 
 	//load effective address
 	else if(operation == "lea"){
-
+		int i = 0;
+		int res = arith_logic (0, op1, 1, op2, "mov", i);
+		if (op1 == "rax")
+			cpu_.rax = res;
+		else if (op1 == "rdi")
+			cpu_.rdi = res;
+		else if (op1 == "rdx")
+			cpu_.rdx = res;
+		else if (op1 == "rbp")
+			cpu_.rbp = res;
+		else if (op1 == "rsp")
+			cpu_.rsp = res;
+		else if (op1 == "eax")
+			cpu_.eax = res;
+		else if (op1 == "edi")
+			cpu_.edi = res;
 	}
 
 	return;
