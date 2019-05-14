@@ -121,9 +121,15 @@ void virtual_memory(){
  	instruction_size = instruction_counter;
 }
 
+int LRU_counter[4] =  {-1,-1,-1,-1};
+
+int replacement_counter = 0;
+
+//int valid_bit[4] = {-1,-1,-1,-1};
+
 void page_table(){
 
-	int pages = (instruction_size + 1) / 4;
+	int pages = (instruction_size) / 4;
 
 	if (instruction_size % 4 != 0) {
 
@@ -132,14 +138,36 @@ void page_table(){
 
 	int page_valid[pages] = {0,0,0,0,0,0,0};
 
+	for (int i = 0; i < 4; i++) {
+
+		LRU_counter[replacement_counter] = cpu_.pc/4;
+
+		if(LRU_counter[i] > -1) {
+
+			page_valid[LRU_counter[i]] = 1;
+		}
+
+		replacement_counter++;
+
+		if (replacement_counter > 4) {
+
+			replacement_counter = 0;
+		}
+	}
+
 	cout << "///////////////////// PAGE TABLE /////////////////////" << endl;
 	cout << "[Valid]\t[Page]\t[Address]" << endl;
 
+	int address_page_table = 1024;
+
 	for (int i = 0; i < pages; i++) {
 
-		cout << "[" << page_valid[i] << "]\t" << "[" << i << "]\t" << "Address" << endl; 
+		cout << "[" << page_valid[i] << "]\t" << "[" << i << "]\t" << "[" << address_page_table << "]" << endl;
+
+		address_page_table = address_page_table + 8; 
 	}
 }
+
 
 
 // WORK IN PROGRESS step_through() will run single lines of code starting from main and update register values as it does so
@@ -171,14 +199,20 @@ void step_through() {
 */
 		cout << "//////////////////////// VIRTUAL MEMORY ///////////////////////////" << endl;
 
+		int page_counter = 0;
+
+		cout << "(PC) (Page) (Virt. Address)  (Machine Code to be run)" << endl;
+
 		for (int i = 0; i < instruction_size - 1; i++) {
 
 			if (cpu_.pc == i) {
 
-				cout << "PC==> " << "[" << i << "]\t" << machine[i].substr(0,32) << endl;
+				cout << "PC==> " << "[" << page_counter/4 << "]\t[" << (i) << "]\t" << machine[i] << endl;
 			}
 
-			else cout << "      " << "[" << i << "]\t" << machine[i].substr(0,32) << endl;
+			else cout << "      " << "[" << page_counter/4 << "]\t[" << (i) << "]\t" << machine[i] << endl;
+
+			page_counter++;
 		}
 
 		cout << endl
@@ -239,7 +273,7 @@ void step_through() {
 		// '123' takes 3 steps
 		// 'helloworld' takes 10 steps
 		cout << "press any key and 'Enter' to continue" << endl;
-		cout << "FUNCTION WILL ONLY LOOP UNTIL CPU CLASS IS TIED IN TO RUN MACHINE CODE AND UPDATE REGISTERS" << endl;
+//		cout << "FUNCTION WILL ONLY LOOP UNTIL CPU CLASS IS TIED IN TO RUN MACHINE CODE AND UPDATE REGISTERS" << endl;
 		char x;
 		cin >> x;
 
