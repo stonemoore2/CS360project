@@ -183,6 +183,8 @@ void step_through() {
 		[EMI] CACHE OPERATION:
 		ATTEMPT TO ACCESS ADDRESS decimal_to_binary(cpu_.pc) PAD ZEROES TO LEFT AS NECESSARY
 	*/
+	cache.cacheSearch(bitset<32>(cpu_.pc).to_string());
+
 
 
 
@@ -252,6 +254,8 @@ void step_through() {
 
 
 		// [EMI] PRINT CACHE IN SIMILAR FORMAT TO ABOVE AND BELOW
+		cache.displayCache();
+		cout<<endl;
 
 
 
