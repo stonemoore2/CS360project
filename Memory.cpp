@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <bitset>
 
 using namespace std;
 
@@ -183,7 +184,7 @@ void step_through() {
 		[EMI] CACHE OPERATION:
 		ATTEMPT TO ACCESS ADDRESS decimal_to_binary(cpu_.pc) PAD ZEROES TO LEFT AS NECESSARY
 	*/
-	cache.cacheSearch(bitset<32>(cpu_.pc).to_string());
+	cache.cacheSearch(bitset<16>(cpu_.pc).to_string());
 
 
 

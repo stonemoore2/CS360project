@@ -128,6 +128,9 @@ double Cache::missRate() {
 double Cache::replacementRate() {
   return ((double)(replacements))/((double)(accesses));
 }
+
+
+Cache cache = Cache(4,2,2,16);
 /*
 int main() {
 

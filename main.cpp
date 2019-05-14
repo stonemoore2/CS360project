@@ -2,6 +2,7 @@
 #include "translator.cpp"
 #include "conversion.cpp"
 #include "cpu.cpp"
+#include "Cache.cpp"
 #include "Memory.cpp"
 
 
@@ -42,7 +43,7 @@ int main(int argc, char** argv)
 
 
 
-  Cache cache = Cache(4,2,2,32);
+  
 
 
 
