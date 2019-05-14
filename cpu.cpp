@@ -285,7 +285,7 @@ void CPU::execute_step(string as){
 			}
 			else{
 				op2_type = 2;
-				if (op1 == "rbp")
+				if (op1 == "rbp" || op1 == "rsp")
 					op2 = to_string(stoi(op2) / 4);
 			}	
 		}

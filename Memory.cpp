@@ -190,7 +190,7 @@ void step_through() {
 			 << "////////////////////////// CALL STACK /////////////////////////////"<< endl;
 
 			 for (int i = cpu_.call_stack.size() - 1; i >= 0; i--){
-			 	if (i >= cpu_.rbp)
+			 	if (i >= cpu_.rsp)
 			 		cout << cpu_.call_stack[i] <<endl;
 			 }
 
