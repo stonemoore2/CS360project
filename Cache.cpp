@@ -107,6 +107,7 @@ string Cache::cacheSearch(string address) {
     }
 
 void Cache::displayCache() {
+  cout<<endl<<"//////////////////////////// CACHE ///////////////////////////////"<< endl;
   for (int i = 0; i < sets; i++) {
     string key =  bitset<64>(i).to_string();
     key = key.substr(key.length()-(floor(log2(sets))),floor(log2(sets)));
@@ -116,6 +117,8 @@ void Cache::displayCache() {
       cout << "Index: " << key << " Tag: " << getTag(cache[key][j].first) << " Block #: " << (ways*i) + j << endl;
     }
   }
+  cout<<"Miss Rate: "<<missRate()<<endl;
+  cout<<"Replacement Rate: "<<replacementRate()<<endl;
 }
 
 double Cache::missRate() {

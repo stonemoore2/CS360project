@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 
 
 
-  // [EMI] INITIALIZE CACHE HERE
+  Cache cache = Cache(4,2,2,32);
 
 
 
