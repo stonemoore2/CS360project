@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 
 
 
-  Cache cache = Cache(4,2,2,32);
+  Cache cache = Cache(4,2,2,16);
 
 
 
