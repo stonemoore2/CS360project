@@ -312,17 +312,7 @@ void CPU::execute_step(string as){
 		int store_address = 0;
 		int result = arith_logic(op1_type, op1, op2_type, op2, operation, store_address);
 
-		/*if(operation == "mov" && op1_type == 0 && op2_type == 1){
-			for(int i = 0; i < cpu_.call_stack.size(); i++){
-				if (cpu_.call_stack[i] == result){
-					if (op1 == "rax")
-						cpu_.rax = i;
-					else if (op1 == "eax")
-						cpu_.eax = i;
-					return;
-				}
-			}
-		}*/
+		
 
 		if (operation == "cmp"){
 			cpu_.EFLAGS = result;
@@ -348,8 +338,11 @@ void CPU::execute_step(string as){
 		}
 		else{
 			int addr = pemdas_eval(op1);
-			call_stack[addr] = result;
+			cpu_.call_stack[addr] = result;
 			cpu_.accessed[addr] = 1;
+			if (operation == "mov" && op1_type == 0 && op2_type == 1){
+				cache.cacheSearch(bitset<16>(cpu_.call_stack[addr]).to_string());	
+			}
 			//if (addr < )
 		}
 	}

@@ -1,8 +1,8 @@
 #include "encode.cpp"
 #include "translator.cpp"
 #include "conversion.cpp"
-#include "cpu.cpp"
 #include "Cache.cpp"
+#include "cpu.cpp"
 #include "Memory.cpp"
 
 
@@ -22,9 +22,8 @@ string file_to_string(ifstream& in){
 }
 
 void machine_to_disk(){
-  for (int i = 0; i < machine_code.size(); i = i + 2){
-    binary[1024 + i] = machine_code.at(i).substr(0,16);
-    binary[1025 + i] = machine_code.at(i).substr(16);
+  for (int i = 0; i < machine_code.size(); i++){
+    binary[1024 + i] = machine_code.at(i);
   }
   return;
 }
@@ -39,13 +38,6 @@ int main(int argc, char** argv)
   assembly = translate (code);
   machine_code = assembly_to_machine(assembly);
   machine_to_disk();
-
-
-
-
-  
-
-
 
 
   bool run_prog = true;

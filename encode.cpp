@@ -25,14 +25,14 @@ string char_to_binary(char c){
 vector<string> string_to_binary(string input){
 	vector<string> result;
 	for (int i = 0; i < input.size(); i++){
-		if (i % 2 == 0)
+		if (i % 4 == 0)
 			result.push_back(char_to_binary(input[i]));
 		else
 			result.back().append(char_to_binary(input[i]));
 	}
-	if (result.back().size() < 16)
+	while (result.back().size() < 32)
 		result.back().append("00000000");
 	while (result.size() < 2048)
-		result.push_back("0000000000000000");
+		result.push_back("00000000000000000000000000000000");
 	return result;
 }
