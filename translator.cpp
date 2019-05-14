@@ -956,7 +956,7 @@ string translate(string source) {
     int ret_check = value.find("ret",i);
     
   if ((call_check < ret_check) && (call_check > -1)) {
-    string sub = "sub rbp, " + to_string(num_variables[count]);
+    string sub = "sub rsp, " + to_string(num_variables[count]);
     
     i = value.find("POTENTIAL FUNCTION CALL",0); //23
     value.replace(i,23,sub);
